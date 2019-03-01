@@ -1,8 +1,12 @@
 package com.zombiemaptracker.beans;
 
-import java.io.File;
+import java.io.Serializable;
 
-public class TrackConfig {
+public class TrackConfig implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String ipAddress;
 	private int portNumber;
 	private String file;
@@ -14,12 +18,11 @@ public class TrackConfig {
 		
 	}
 	
-	public TrackConfig(String serverName, String ip, int port, String file, int interval) {
+	public TrackConfig(String serverName, String ip, int port, String file) {
 		this.serverName = serverName;
 		this.ipAddress = ip;
 		this.portNumber = port;
 		this.file = file;
-		this.interval = interval;
 	}
 
 	public String getIpAddress() {
@@ -46,10 +49,12 @@ public class TrackConfig {
 		this.file = file;
 	}
 
+	@Deprecated
 	public int getInterval() {
 		return interval;
 	}
-
+	
+	@Deprecated
 	public void setInterval(int interval) {
 		this.interval = interval;
 	}

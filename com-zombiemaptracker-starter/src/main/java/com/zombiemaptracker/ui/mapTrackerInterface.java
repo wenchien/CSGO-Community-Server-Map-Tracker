@@ -37,11 +37,18 @@ import javax.swing.UIManager.*;
 
 public class mapTrackerInterface {
 	private DefaultListModel<TrackConfig> mapTrackingList = new DefaultListModel<TrackConfig>();
+	public DefaultListModel<TrackConfig> getMapTrackingList() {
+		return mapTrackingList;
+	}
+
+	public void setMapTrackingList(DefaultListModel<TrackConfig> mapTrackingList) {
+		this.mapTrackingList = mapTrackingList;
+	}
+
 	private JFrame frmCsgoCommunityServer;
 	private JTextField ipTextField;
 	private JTextField portTextField;
 	private JTextField filterFileLocation;
-	private JTextField intervalTextField;
 	private JTextField serverNameTextField;
 
 	/**
@@ -122,12 +129,12 @@ public class mapTrackerInterface {
 		JButton addButton = new JButton("Add");
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (ipTextField.getText().equals("") || portTextField.getText().equals("") || intervalTextField.getText().equals("")
+				if (ipTextField.getText().equals("") || portTextField.getText().equals("")
 						|| serverNameTextField.getText().equals("")) {
-					JOptionPane.showMessageDialog(frmCsgoCommunityServer, "Eggs are not supposed to be green. So fill in the required textfields");
+					JOptionPane.showMessageDialog(frmCsgoCommunityServer, "Eggs are not supposed to be red. So fill in the required textfields");
 				}
 				TrackConfig tc = new TrackConfig(serverNameTextField.getText(), ipTextField.getText(), Integer.parseInt(portTextField.getText()), 
-						filterFileLocation.getText(), Integer.parseInt(intervalTextField.getText()));
+						filterFileLocation.getText());
 				mapTrackingList.addElement(tc);
 				try {
 					Util.trackMap(tc);
@@ -141,17 +148,12 @@ public class mapTrackerInterface {
 		JButton clearButton = new JButton("Clear");
 		clearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				serverNameTextField.setText("");
 				ipTextField.setText("");;
 				portTextField.setText("");;
 				filterFileLocation.setText("");;
-				intervalTextField.setText("");;
 			}
 		});
-
-		JLabel intervalLabel = new JLabel("*Interval: ");
-
-		intervalTextField = new JTextField();
-		intervalTextField.setColumns(10);
 
 		JLabel serverName = new JLabel("*Server: ");
 
@@ -166,61 +168,55 @@ public class mapTrackerInterface {
 		});
 		GroupLayout gl_settingsTab = new GroupLayout(settingsTab);
 		gl_settingsTab.setHorizontalGroup(
-				gl_settingsTab.createParallelGroup(Alignment.LEADING)
+			gl_settingsTab.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_settingsTab.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(gl_settingsTab.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblServerIp)
-								.addComponent(lblPort)
-								.addComponent(lblFilterFile)
-								.addComponent(intervalLabel)
-								.addComponent(serverName))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_settingsTab.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(filterFileLocation)
-								.addComponent(portTextField)
-								.addComponent(ipTextField, GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-								.addComponent(intervalTextField, GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-								.addComponent(serverNameTextField))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_settingsTab.createParallelGroup(Alignment.LEADING)
-								.addComponent(addButton, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-								.addComponent(clearButton, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-								.addComponent(btnBrowse, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-								.addComponent(btnDefault, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
-						.addContainerGap())
-				);
+					.addContainerGap()
+					.addGroup(gl_settingsTab.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblServerIp)
+						.addComponent(lblPort)
+						.addComponent(lblFilterFile)
+						.addComponent(serverName))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_settingsTab.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(filterFileLocation)
+						.addComponent(portTextField)
+						.addComponent(ipTextField, GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+						.addComponent(serverNameTextField))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_settingsTab.createParallelGroup(Alignment.LEADING)
+						.addComponent(addButton, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+						.addComponent(clearButton, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+						.addComponent(btnBrowse, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+						.addComponent(btnDefault, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+					.addContainerGap())
+		);
 		gl_settingsTab.setVerticalGroup(
-				gl_settingsTab.createParallelGroup(Alignment.LEADING)
+			gl_settingsTab.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_settingsTab.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
-								.addComponent(addButton)
-								.addComponent(serverName)
-								.addComponent(serverNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_settingsTab.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_settingsTab.createSequentialGroup()
-										.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblServerIp)
-												.addComponent(ipTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblPort)
-												.addComponent(portTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(btnDefault)))
-								.addComponent(clearButton))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblFilterFile)
-								.addComponent(filterFileLocation, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnBrowse, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
-								.addComponent(intervalTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(intervalLabel))
-						.addContainerGap(142, Short.MAX_VALUE))
-				);
+					.addContainerGap()
+					.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
+						.addComponent(addButton)
+						.addComponent(serverName)
+						.addComponent(serverNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_settingsTab.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_settingsTab.createSequentialGroup()
+							.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblServerIp)
+								.addComponent(ipTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblPort)
+								.addComponent(portTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnDefault)))
+						.addComponent(clearButton))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_settingsTab.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFilterFile)
+						.addComponent(filterFileLocation, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnBrowse, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(180, Short.MAX_VALUE))
+		);
 		settingsTab.setLayout(gl_settingsTab);
 
 		JPanel mapTracker = new JPanel();
@@ -258,6 +254,11 @@ public class mapTrackerInterface {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		mnFile.add(mntmExit);
 
 		JMenu mnHelp = new JMenu("Help");
