@@ -102,6 +102,6 @@ public class TrackConfig implements Serializable{
 
 	@Override
 	public String toString() {
-		return serverName + serverInfo;
+		return serverName + " " + serverInfo;
 	}
 }

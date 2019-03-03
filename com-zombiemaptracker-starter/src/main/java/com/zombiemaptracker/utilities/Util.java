@@ -6,8 +6,10 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-
+import java.util.Iterator;
+import javax.swing.DefaultListModel;
 import com.zombiemaptracker.beans.TrackConfig;
+
 public class Util {
 	public static void trackMap(TrackConfig tc) throws IOException {
 		int port = tc.getPortNumber();
@@ -21,11 +23,10 @@ public class Util {
 		// Initialize a datagram packet with data and address
 		DatagramPacket packet = new DatagramPacket(specialMsg, specialMsg.length,
 				address, port);
-
+		
 		// Create a datagram socket, send the packet through it, close it.
 		DatagramSocket dsocket = new DatagramSocket();
 		dsocket.send(packet);
-		System.out.println("Data Is sent");
 		DatagramPacket receivePacket = new DatagramPacket(received, received.length);
 		dsocket.receive(receivePacket);
 		String modifiedSentence = new String(receivePacket.getData());
@@ -34,6 +35,7 @@ public class Util {
 		String mapName = "";
 		for (int i = 0; i < split.length; i++) {
 			if  (split[i].contains("ze_")) {
+				
 				mapName = split[i];
 				tc.setServerInfo(mapName);
 				break;
@@ -45,6 +47,15 @@ public class Util {
 		System.out.println(mapName);
 
 		dsocket.close();
+	}
+	//need invalid or down server checks
+	
+	public static void refreshMapTrack(final DefaultListModel<TrackConfig> mapTrackingList) throws IOException {
+		for (Object ct : mapTrackingList.toArray()) {
+			if (ct instanceof TrackConfig) {
+				Util.trackMap((TrackConfig)ct);
+			}
+		}
 	}
 
 	public static byte[] addSpecialBytes(byte[] raw) {
