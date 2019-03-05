@@ -4,7 +4,7 @@ Limited to "ZE" type of maps as of right now, filter features will be added soon
 
 
 ## To-Do List
-This is by no means an exhaustive list. It gives an indication of the project's current progress
+This is by no means an exhaustive list. It gives an indication of the project's current progress for the next patch / update
 
 
 **Features**:
