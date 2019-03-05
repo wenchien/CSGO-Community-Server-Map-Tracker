@@ -20,3 +20,7 @@ This is by no means an exhaustive list. It gives an indication of the project's 
 - [ ] Fix when map change causing the application to freeze
 - [ ] Fix random / unexpected freeze
 - [ ] Clean up code
+
+
+## Releases
+See [Releases](https://github.com/wenchien/CSGO-Community-Server-Map-Tracker/releases)
