@@ -57,15 +57,16 @@ public class Util {
 			}
 		}
 	}
-
-	public static byte[] addSpecialBytes(byte[] raw) {
-		byte[] bytes = new byte[raw.length + 5];
-		bytes[0] = (byte)0xFF;
-		bytes[1] = (byte)0xFF;
-		bytes[2] = (byte)0xFF;
-		bytes[3] = (byte)0xFF;
-		bytes[4] = (byte)0x54;
-		System.arraycopy(raw, 0, bytes, 5, bytes.length - 5);
-		return bytes;
+	//https://developer.valvesoftware.com/wiki/Server_queries
+	//See A2S_Info Section
+	public static byte[] addSpecialBytes(byte[] old) {
+		byte[] modified = new byte[old.length + 5];
+		modified[0] = (byte)0xFF;
+		modified[1] = (byte)0xFF;
+		modified[2] = (byte)0xFF;
+		modified[3] = (byte)0xFF;
+		modified[4] = (byte)0x54;
+		System.arraycopy(old, 0, modified, 5, modified.length - 5);
+		return modified;
 	}
 }
